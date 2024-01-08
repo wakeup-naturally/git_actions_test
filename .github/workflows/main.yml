@@ -10,26 +10,10 @@ jobs:
       ISSUE: ${{ github.event.issue.body }}
     if: github.event.label.name == 'decrypt_request'
     steps:
-      - name: issue reply
-        if: github.event.label.name == 'decrypt_request'
-        uses: actions-cool/issues-helper@main
-        with:
-          actions: 'create-comment'
-          token: ${{ secrets.GITHUB_TOKEN }}
-          issue-number: ${{ github.event.issue.number }}
-          body: |
-            你好 @${{ github.event.issue.user.login }}，我们完全同意你的提议/反馈，欢迎PR。
       - name: setup node env
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '14.x'
-      - name: cache node
-        id: cache-dependencies
-        uses: actions/cache@v3
-        with:
-          path: |
-            **/node_modules
-          key: ${runner.OS}
+          node-version: '18.x'
       - name: issue body check
         id: issue_verify
         run: |
