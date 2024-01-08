@@ -2,13 +2,14 @@ name: Issue Reply Demo
 run-name: ${{ github.actor }} is testing out github actions.
 on:
   issues:
-    types: [labeled]
+    types: [opened, edited]
 jobs:
-  issue-labeled:
+  reply-helper:
     runs-on: ubuntu-latest
+    env:
+      ISSUE: ${{ github.event.issue.body }}
     steps:
-      - name: help wanted
-        if: github.event.label.name == 'help wanted'
+      - name: issue reply
         uses: actions-cool/issues-helper@main
         with:
           actions: 'create-comment'
@@ -16,3 +17,25 @@ jobs:
           issue-number: ${{ github.event.issue.number }}
           body: |
             你好 @${{ github.event.issue.user.login }}，我们完全同意你的提议/反馈，欢迎PR。
+      - name: setup node env
+        uses: actions/setup-node@/v3
+        with:
+          node-version: 18
+          registry-url: https://registry.npmjs.com/
+      - name: cache node
+        id: cache-dependencies
+        uses: actions/cache@/v3
+        with:
+          path: |
+            **/node_modules
+          key: ${runner.OS}
+      - name: issue body check
+        run: echo "testoutput=Hello World!" >> "$GITHUB_OUTPUT"
+      - name: reply to issues
+        uses: actions-cool/issues-helper@main
+        with:
+          actions: 'create-comment'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            你好 @${{ github.event.issue.user.login }}，${{ steps.setting.output.testoutput }}测试完毕，欢迎PR。
