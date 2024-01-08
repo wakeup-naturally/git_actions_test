@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ISSUE: ${{ github.event.issue.body }}
+    if: github.event.label.name == 'decrypt_request'
     steps:
       - name: issue reply
         if: github.event.label.name == 'decrypt_request'
