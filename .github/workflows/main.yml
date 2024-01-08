@@ -30,6 +30,7 @@ jobs:
             **/node_modules
           key: ${runner.OS}
       - name: issue body check
+        id: issue_verify
         run: echo "testoutput=Hello World!" >> "$GITHUB_OUTPUT"
       - name: reply to issues
         uses: actions-cool/issues-helper@main
@@ -38,4 +39,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
           body: |
-            你好 @${{ github.event.issue.user.login }}，${{ steps.setting.output.testoutput }}测试完毕，欢迎PR。
+            你好 @${{ github.event.issue.user.login }}，${{ steps.issue_verify.output.testoutput }}测试完毕，欢迎PR。
