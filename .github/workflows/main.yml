@@ -10,6 +10,7 @@ jobs:
       ISSUE: ${{ github.event.issue.body }}
     if: github.event.label.name == 'decrypt_request'
     steps:
+      - uses: actions/checkout@main
       - name: setup node env
         uses: actions/setup-node@v3
         with:
@@ -17,7 +18,8 @@ jobs:
       - name: issue body check
         id: issue_verify
         run: |
-          node ./action_script/text_decrypt.js
+          npm install
+          npm install got
           decryptText=$(node ./action_script/text_decrypt.js)
           echo "decryptText=$decryptText" >> $GITHUB_ENV
       - name: reply to issues
