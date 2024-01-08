@@ -2,7 +2,7 @@ name: Issue Reply Demo
 run-name: ${{ github.actor }} is testing out github actions.
 on:
   issues:
-    types: [opened, edited, labeled]
+    types: [opened, edited, labeled, unlabeled]
 jobs:
   reply-helper:
     runs-on: ubuntu-latest
@@ -31,7 +31,7 @@ jobs:
           key: ${runner.OS}
       - name: issue body check
         id: issue_verify
-        run: echo "testoutput=Hello World!" >> "$GITHUB_OUTPUT"
+        run: echo "testoutput=Hello World!" >> $GITHUB_OUTPUT
       - name: reply to issues
         uses: actions-cool/issues-helper@main
         with:
@@ -39,4 +39,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
           body: |
-            你好 @${{ github.event.issue.user.login }}，${{ steps.issue_verify.output.testoutput }}测试完毕，欢迎PR。
+            你好 @${{ github.event.issue.user.login }}，${{ steps.issue_verify.outputs.testoutput }}测试完毕，欢迎PR。
