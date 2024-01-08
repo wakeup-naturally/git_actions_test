@@ -10,6 +10,7 @@ jobs:
       ISSUE: ${{ github.event.issue.body }}
     steps:
       - name: issue reply
+        if: github.event.label.name == 'decrypt_request'
         uses: actions-cool/issues-helper@main
         with:
           actions: 'create-comment'
