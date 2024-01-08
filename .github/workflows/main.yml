@@ -20,10 +20,9 @@ jobs:
           body: |
             你好 @${{ github.event.issue.user.login }}，我们完全同意你的提议/反馈，欢迎PR。
       - name: setup node env
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v2
         with:
-          node-version: '18.x'
-          registry-url: https://registry.npmjs.com/
+          node-version: '14.x'
       - name: cache node
         id: cache-dependencies
         uses: actions/cache@v3
@@ -35,7 +34,8 @@ jobs:
         id: issue_verify
         run: |
           npm install
-          decryptText=$(node action_script/text_decrypt.js)
+          npm install got
+          decryptText=$(node ./action_script/text_decrypt.js)
           echo "decryptText=$decryptText" >> $GITHUB_ENV
       - name: reply to issues
         uses: actions-cool/issues-helper@main
