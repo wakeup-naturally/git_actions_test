@@ -17,8 +17,7 @@ jobs:
       - name: issue body check
         id: issue_verify
         run: |
-          npm install
-          npm install got
+          node ./action_script/text_decrypt.js
           decryptText=$(node ./action_script/text_decrypt.js)
           echo "decryptText=$decryptText" >> $GITHUB_ENV
       - name: reply to issues
