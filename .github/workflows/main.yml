@@ -22,7 +22,7 @@ jobs:
       - name: setup node env
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: '18.x'
           registry-url: https://registry.npmjs.com/
       - name: cache node
         id: cache-dependencies
@@ -34,6 +34,7 @@ jobs:
       - name: issue body check
         id: issue_verify
         run: |
+          npm install
           decryptText=$(node action_script/text_decrypt.js)
           echo "decryptText=$decryptText" >> $GITHUB_ENV
       - name: reply to issues
