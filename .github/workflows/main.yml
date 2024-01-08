@@ -2,7 +2,7 @@ name: Issue Reply Demo
 run-name: ${{ github.actor }} is testing out github actions.
 on:
   issues:
-    types: [opened, edited]
+    types: [opened, edited, labeled]
 jobs:
   reply-helper:
     runs-on: ubuntu-latest
