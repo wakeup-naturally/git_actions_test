@@ -30,8 +30,7 @@ jobs:
         run: |
           npm i dotenv
           touch .env
-          echo PRIVATE_KEY=HelloWorld >> .env
-          cat .env
+          echo HELLO_PRIVATE_KEY=HelloWorld >> .env
           
           decryptText=$(node ./action_script/text_decrypt.js hello=world)
           echo "decryptText=$decryptText" >> $GITHUB_ENV
