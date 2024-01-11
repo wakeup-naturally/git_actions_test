@@ -21,7 +21,8 @@ jobs:
             你好 @${{ github.event.issue.user.login }}，我们完全同意你的提议/反馈，欢迎PR。
       - name: save secret to file
         run: | 
-          echo $TEST_PRIVATE_KEY > private-key.pem
+          touch .env
+          echo $TEST_PRIVATE_KEY > .env
         env:
           PRIVATE_KEY: ${{ secrets.TEST_PRIVATE_KEY }}
       - name: setup node env
