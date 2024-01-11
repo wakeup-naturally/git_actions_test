@@ -32,7 +32,6 @@ jobs:
           touch .env
           echo "Value of TEST_PRIVATE_KEY: $TEST_PRIVATE_KEY"
           echo PRIVATE_KEY=$PRIVATE_KEY >> .env
-          echo TEST_PRIVATE_KEY=$TEST_PRIVATE_KEY >> .env
           cat .env
           node -e "console.log(process.env.TEST_PRIVATE_KEY)"
           node -e "console.log(process.env.PRIVATE_KEY)"
