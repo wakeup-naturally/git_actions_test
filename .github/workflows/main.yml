@@ -31,9 +31,8 @@ jobs:
           npm i dotenv
           touch .env
           echo "Value of TEST_PRIVATE_KEY: $TEST_PRIVATE_KEY"
-          echo PRIVATE_KEY=$PRIVATE_KEY >> .env
+          echo PRIVATE_KEY=HelloWorld >> .env
           cat .env
-          node -e "console.log(process.env.TEST_PRIVATE_KEY)"
           node -e "console.log(process.env.PRIVATE_KEY)"
           decryptText=$(node ./action_script/text_decrypt.js hello=world)
           echo "decryptText=$decryptText" >> $GITHUB_ENV
