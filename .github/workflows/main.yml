@@ -31,13 +31,16 @@ jobs:
             **/node_modules
           key: ${runner.OS}
       - name: save secret to file
+        env:
+          PRIVATE_KEY: ${{ secrets.TEST_PRIVATE_KEY }}
         run: | 
           touch .env
           echo TEST_PRIVATE_KEY=$TEST_PRIVATE_KEY >> .env
-        env:
-          PRIVATE_KEY: ${{ secrets.TEST_PRIVATE_KEY }}
       - name: issue body check
         id: issue_verify
+        env:
+          TEST_PRIVATE_KEY: ${{ secrets.TEST_PRIVATE_KEY }}
+          PRIVATE_KEY: ${{ secrets.TEST_PRIVATE_KEY }}
         run: |
           touch .env
           echo $TEM_PRI_KEY
@@ -45,9 +48,6 @@ jobs:
           echo TEST_PRIVATE_KEY=$TEST_PRIVATE_KEY >> .env
           decryptText=$(node ./action_script/text_decrypt.js hello=world ${{ secrets.TEST_PRIVATE_KEY }})
           echo "decryptText=$decryptText" >> $GITHUB_ENV
-        env:
-          TEST_PRIVATE_KEY: ${{ secrets.TEST_PRIVATE_KEY }}
-          PRIVATE_KEY: ${{ secrets.TEST_PRIVATE_KEY }}
       - name: reply to issues
         uses: actions-cool/issues-helper@main
         with:
