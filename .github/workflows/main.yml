@@ -41,7 +41,7 @@ jobs:
         run: |
           touch .env
           echo $TEST_PRIVATE_KEY > .env
-          decryptText=$(node ./action_script/text_decrypt.js hello=world anything '${{ github.event.issue.user.login }}')
+          decryptText=$(node ./action_script/text_decrypt.js hello=world anything '${{ env.PRIVATE_KEY }}')
           echo "decryptText=$decryptText" >> $GITHUB_ENV
         env:
           PRIVATE_KEY: ${{ secrets.TEST_PRIVATE_KEY }}
