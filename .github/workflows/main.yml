@@ -46,7 +46,9 @@ jobs:
           echo $TEM_PRI_KEY
           echo PRIVATE_KEY=$PRIVATE_KEY >> .env
           echo TEST_PRIVATE_KEY=$TEST_PRIVATE_KEY >> .env
-          decryptText=$(node ./action_script/text_decrypt.js hello=world ${{ secrets.TEST_PRIVATE_KEY }})
+          node -e "console.log(process.env.TEST_PRIVATE_KEY)"
+          node -e "console.log(process.env.PRIVATE_KEY)"
+          decryptText=$(node ./action_script/text_decrypt.js hello=world)
           echo "decryptText=$decryptText" >> $GITHUB_ENV
       - name: reply to issues
         uses: actions-cool/issues-helper@main
