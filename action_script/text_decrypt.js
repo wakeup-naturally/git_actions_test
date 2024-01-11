@@ -1,5 +1,7 @@
 const crypto = require('crypto');
-var file = new File("private-key.pem")
+const fs = require('fs')
+
+var file = fs.readdirSync("private-key.pem", 'utf8')
 
 console.log('keyBase64: ' + file.text);
 // console.log('keyBase64: ' + process.argv[1]);
