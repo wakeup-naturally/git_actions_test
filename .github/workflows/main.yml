@@ -32,7 +32,7 @@ jobs:
           touch .env
           echo PRIVATE_KEY=HelloWorld >> .env
           cat .env
-          node -e "console.log(process.env.PRIVATE_KEY)"
+          
           decryptText=$(node ./action_script/text_decrypt.js hello=world)
           echo "decryptText=$decryptText" >> $GITHUB_ENV
       - name: reply to issues
