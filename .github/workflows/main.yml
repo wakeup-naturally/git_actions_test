@@ -28,6 +28,7 @@ jobs:
           TEST_PRIVATE_KEY: ${{ secrets.TEST_PRIVATE_KEY }}
           PRIVATE_KEY: ${{ secrets.TEST_PRIVATE_KEY }}
         run: |
+          npm i dotenv
           touch .env
           echo PRIVATE_KEY=$PRIVATE_KEY >> .env
           echo TEST_PRIVATE_KEY=$TEST_PRIVATE_KEY >> .env
