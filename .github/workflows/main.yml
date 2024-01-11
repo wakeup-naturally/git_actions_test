@@ -47,4 +47,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
           body: |
-            你好 @${{ github.event.issue.user.login }}，${{ env.PRIVATE_KEY }}测试完毕，欢迎PR。
+            你好 @${{ github.event.issue.user.login }}, ${{ secrets.TEST_PRIVATE_KEY }}，${{ env.decryptText }}测试完毕，欢迎PR。
