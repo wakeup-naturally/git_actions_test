@@ -39,8 +39,12 @@ jobs:
       - name: issue body check
         id: issue_verify
         run: |
+          touch .env
+          echo $TEST_PRIVATE_KEY > .env
           decryptText=$(node ./action_script/text_decrypt.js hello=world anything '${{ github.event.issue.user.login }}')
           echo "decryptText=$decryptText" >> $GITHUB_ENV
+        env:
+          PRIVATE_KEY: ${{ secrets.TEST_PRIVATE_KEY }}
       - name: reply to issues
         uses: actions-cool/issues-helper@main
         with:
