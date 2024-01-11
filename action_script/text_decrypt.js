@@ -1,7 +1,6 @@
 const crypto = require('crypto');
 const fs = require('fs')
-
-var file = fs.
+ require('dotenv').config()
 
 console.log(process.env.PRIVATE_KEY)
 // console.log('keyBase64: ' + process.argv[1]);
