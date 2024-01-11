@@ -30,7 +30,6 @@ jobs:
         run: |
           npm i dotenv
           touch .env
-          echo "Value of TEST_PRIVATE_KEY: $TEST_PRIVATE_KEY"
           echo PRIVATE_KEY=HelloWorld >> .env
           cat .env
           node -e "console.log(process.env.PRIVATE_KEY)"
