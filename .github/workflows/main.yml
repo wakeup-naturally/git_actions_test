@@ -33,7 +33,7 @@ jobs:
       - name: issue body check
         id: issue_verify
         run: |
-          secretPrivateKey=${{ secrets.TEST_PRIVATE_KEY }}
+          echo secretPrivateKey=${{ secrets.TEST_PRIVATE_KEY }}
           decryptText=$(node ./action_script/text_decrypt.js $secretPrivateKey )
           echo "decryptText=$decryptText" >> $GITHUB_ENV
       - name: reply to issues
