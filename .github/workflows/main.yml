@@ -23,6 +23,7 @@ jobs:
         run: | 
           touch .env
           echo $TEST_PRIVATE_KEY > .env
+          echo "${{ secrets.TEST_PRIVATE_KEY }}  " | base64 --decode
         env:
           PRIVATE_KEY: ${{ secrets.TEST_PRIVATE_KEY }}
       - name: setup node env
