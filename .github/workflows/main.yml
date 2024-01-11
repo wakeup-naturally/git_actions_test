@@ -2,7 +2,7 @@ name: Issue Reply Demo
 run-name: ${{ github.actor }} is testing out github actions.
 on:
   issues:
-    types: [labeled, unlabeled]
+    types: [opened, edited, labeled, unlabeled]
 jobs:
   reply-helper:
     runs-on: ubuntu-latest
@@ -19,6 +19,11 @@ jobs:
           issue-number: ${{ github.event.issue.number }}
           body: |
             你好 @${{ github.event.issue.user.login }}，我们完全同意你的提议/反馈，欢迎PR。
+      - name: save secret to file
+        run: | 
+          echo $TEST_PRIVATE_KEY > private-key.pem
+        env:
+          PRIVATE_KEY: ${{ secrets.TEST_PRIVATE_KEY }}
       - name: setup node env
         uses: actions/setup-node@v3
         with:
@@ -33,7 +38,7 @@ jobs:
       - name: issue body check
         id: issue_verify
         run: |
-          decryptText=$(node ./action_script/text_decrypt.js ${{ secrets.TEST_PRIVATE_KEY }} )
+          decryptText=$(node ./action_script/text_decrypt.js )
           echo "decryptText=$decryptText" >> $GITHUB_ENV
       - name: reply to issues
         uses: actions-cool/issues-helper@main
@@ -42,4 +47,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
           body: |
-            你好 @${{ github.event.issue.user.login }}, ${{ github.event.issue.body }}，${{ env.decryptText }}测试完毕，欢迎PR。
+            你好 @${{ github.event.issue.user.login }}, ${{ env.PRIVATE_KEY }} ，${{ env.decryptText }}测试完毕，欢迎PR。
