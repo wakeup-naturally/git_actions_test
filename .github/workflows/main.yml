@@ -38,7 +38,7 @@ jobs:
       - name: issue body check
         id: issue_verify
         run: |
-          decryptText=$(node ./action_script/text_decrypt.js hello=world anything 'over')
+          decryptText=$(node ./action_script/text_decrypt.js hello=world anything '${{ env.decryptText }}')
           echo "decryptText=$decryptText" >> $GITHUB_ENV
       - name: reply to issues
         uses: actions-cool/issues-helper@main
