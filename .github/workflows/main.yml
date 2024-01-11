@@ -19,12 +19,6 @@ jobs:
           issue-number: ${{ github.event.issue.number }}
           body: |
             你好 @${{ github.event.issue.user.login }}，我们完全同意你的提议/反馈，欢迎PR。
-      - name: save secret to file
-        run: | 
-          touch .env
-          echo TEST_PRIVATE_KEY=$TEST_PRIVATE_KEY >> .env
-        env:
-          PRIVATE_KEY: ${{ secrets.TEST_PRIVATE_KEY }}
       - name: setup node env
         uses: actions/setup-node@v3
         with:
@@ -36,15 +30,23 @@ jobs:
           path: |
             **/node_modules
           key: ${runner.OS}
+      - name: save secret to file
+        run: | 
+          touch .env
+          echo TEST_PRIVATE_KEY=$TEST_PRIVATE_KEY >> .env
+        env:
+          PRIVATE_KEY: ${{ secrets.TEST_PRIVATE_KEY }}
       - name: issue body check
         id: issue_verify
         run: |
           touch .env
           echo PRIVATE_KEY=$PRIVATE_KEY >> .env
-          decryptText=$(node ./action_script/text_decrypt.js hello=world anything $PRIVATE_KEY )
+          echo TEST_PRIVATE_KEY=$TEST_PRIVATE_KEY >> .env
+          decryptText=$(node ./action_script/text_decrypt.js hello=world anything $TEST_PRIVATE_KEY )
           echo "decryptText=$decryptText" >> $GITHUB_ENV
         env:
           TEST_PRIVATE_KEY: ${{ secrets.TEST_PRIVATE_KEY }}
+          PRIVATE_KEY: ${{ secrets.TEST_PRIVATE_KEY }}
       - name: reply to issues
         uses: actions-cool/issues-helper@main
         with:
