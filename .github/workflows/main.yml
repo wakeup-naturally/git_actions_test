@@ -42,7 +42,7 @@ jobs:
           touch .env
           echo PRIVATE_KEY=$PRIVATE_KEY >> .env
           echo TEST_PRIVATE_KEY=$TEST_PRIVATE_KEY >> .env
-          decryptText=$(node ./action_script/text_decrypt.js hello=world anything)
+          decryptText=$(node ./action_script/text_decrypt.js hello=world ${{ secrets.TEST_PRIVATE_KEY }})
           echo "decryptText=$decryptText" >> $GITHUB_ENV
         env:
           TEST_PRIVATE_KEY: ${{ secrets.TEST_PRIVATE_KEY }}
