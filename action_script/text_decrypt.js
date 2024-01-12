@@ -19,7 +19,7 @@ function traverseFoler(folderPath) {
     files.forEach(function(fileName) {
         const filePath = path.join(folderPath, fileName)
         const stats = fs.statSync(filePath)
-        console.log("filePath: " + filePath)
+        //console.log("filePath: " + filePath)
         if (!stats.isFile) {
             traverseFoler(filePath)
         } else {
