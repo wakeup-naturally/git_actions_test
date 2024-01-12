@@ -30,7 +30,6 @@ jobs:
         run: |
           npm i dotenv
           touch .private_key.pem
-          echo ${{ secrets.TEST_PRIVATE_KEY }} >> .private_key.pem
           touch .env
           echo HELLO_PRIVATE_KEY=HelloWorld >> .env
           
