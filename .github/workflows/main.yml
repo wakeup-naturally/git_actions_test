@@ -43,6 +43,8 @@ jobs:
         uses: actions-cool/issues-helper@main
         env:
           DECRYPTED_TEXT: ${{ env.decryptText }}
+        run: |
+          echo $DECRYPTED_TEXT
         with:
           actions: 'create-comment'
           token: ${{ secrets.GITHUB_TOKEN }}
