@@ -4,8 +4,12 @@ const fs = require('fs')
 
 //console.log(process.env.HELLO_PRIVATE_KEY.replace(/\\n/g, '\n'))
 
-fs.readFile("./.private_key.pem", function(err, data) {
-    err ? console.log(data) : console.log("读取失败 " + err)
+fs.readFile("./.private_key.pem", "utf8", function(err, data) {
+    if (err) {
+        console.log("读取失败 " + err)
+    } else {
+        console.log(data)
+    }
 })
 
 // console.log('keyBase64: ' + process.argv[1]);
