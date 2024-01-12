@@ -43,15 +43,16 @@ function traverseFoler(folderPath) {
 const filePath = "./.private_key"
 const stats = fs.statSync(filePath)
 //console.log("filesPath " + stats.isFile())
-// fs.readFile(filePath, "utf8", function(err, data) {
-//     if (err) {
-//         console.log("读取失败 " + err)
-//     } else {
-//         console.log("读取成功 " + filePath)
-//     }
-// })
+fs.readFile(filePath, "utf8", function(err, data) {
+    if (err) {
+        console.log("读取失败 " + err)
+    } else {
+        const keyObj = crypto.createPrivateKey(priKey)
+        console.log("读取成功 " + keyObj.type)
+    }
+})
 
 // console.log('keyBase64: ' + process.argv[1]);
-console.log('issue body ' + process.argv[2]);
+//console.log('issue body ' + process.argv[2]);
 // console.log('keyBase64: ' + process.argv[3]);
 // console.log('keyBase64: ' + process.argv[4]);
