@@ -62,10 +62,10 @@ fs.readFile(filePath, "utf8", function(err, data) {
     if (err) {
         console.log("读取失败 " + err)
     } else {
-        // const decrypt = crypto.privateDecrypt(
-        //     data,
-        //     Buffer.from(encrypt, 'base64')).toString('utf8')
-        console.log("读取成功 " + data)
+        const decrypt = crypto.privateDecrypt(
+            data,
+            Buffer.from(encrypt, 'base64')).toString('utf8')
+        console.log("读取成功 " + decrypt)
     }
 })
 
