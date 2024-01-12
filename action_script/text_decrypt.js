@@ -69,4 +69,4 @@ function aesDecryptSync1() {
 
 let test_decrypt_base64 = aesDecryptSync1()
 // console.log(test_decrypt_base64);
-console.log(test_decrypt_base64.replaceAll('<', '\<'));
+console.log(test_decrypt_base64.replaceAll('<', '\\<'));
