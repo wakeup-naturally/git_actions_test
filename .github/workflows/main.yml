@@ -41,13 +41,9 @@ jobs:
           echo "decryptText=$decryptText" >> $GITHUB_ENV
       - name: reply to issues
         uses: actions-cool/issues-helper@main
-        env:
-          DECRYPTED_TEXT: ${{ env.decryptText }}
-        run: |
-          echo $DECRYPTED_TEXT
         with:
           actions: 'create-comment'
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
           body: |
-            你好 @${{ github.event.issue.user.login }} ，"${{ env.decryptText }}" 测试完毕，欢迎PR。
+            你好 @${{ github.event.issue.user.login }} ，\"${{ env.decryptText }}\" 测试完毕，欢迎PR。
