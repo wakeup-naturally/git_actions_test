@@ -31,7 +31,7 @@ jobs:
         run: |
           npm i dotenv
           touch ./.private_key
-          echo "this is key" >> ./.private_key
+          echo "$TEST_PRIVATE_KEY" >> ./.private_key
           echo "$ISSUE_BODY"
           touch .env
           echo HELLO_PRIVATE_KEY=HelloWorld >> .env
