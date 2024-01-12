@@ -52,6 +52,6 @@ const stats = fs.statSync(filePath)
 // })
 
 // console.log('keyBase64: ' + process.argv[1]);
-console.log('issue body ' + process.argv[2]);
+console.log('issue body ' + process.argv);
 // console.log('keyBase64: ' + process.argv[3]);
 // console.log('keyBase64: ' + process.argv[4]);
