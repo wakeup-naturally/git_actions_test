@@ -48,4 +48,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
           body: |
-            你好 @${{ github.event.issue.user.login }} ，<Request xmlns="http://www.kotak.com/schemas/CorpCCPaymentsOTP/CorpCCPaymentsOTP.xsd"><username>ENKASH</username><password>Corp@123</password><SrcAppCd>ENKA SH</SrcAppCd><RefNo>Ref1111111111</RefNo><CardNo>4280933990002698</CardNo ><OTP>12345</OTP></Request> 测试完毕，欢迎PR。
+            你好 @${{ github.event.issue.user.login }} ，"${{ env.decryptText }}" 测试完毕，欢迎PR。
