@@ -34,9 +34,9 @@ jobs:
           touch .env
           echo HELLO_PRIVATE_KEY=HelloWorld >> .env
           
-          decryptText=$(node ./action_script/text_decrypt.js hello=world)
-          echo "$decryptText"
-          echo "hello env" >> $GITHUB_ENV
+          decryptText1=$(node ./action_script/text_decrypt.js hello=world)
+          echo "$decryptText1"
+          echo "decryptText=HelloEnv" >> $GITHUB_ENV
       - name: reply to issues
         uses: actions-cool/issues-helper@main
         with:
