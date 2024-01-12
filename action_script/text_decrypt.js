@@ -17,7 +17,7 @@ var filesPath = ""
 function traverseFoler(folderPath) {
     const files = fs.readdirSync(folderPath)
     files.forEach(function(fileName) {
-        console.log("file: " + fileName)
+        console.log("file: " + decodeURIComponent(fileName))
         // const filePath = path.join(folderPath, fileName)
         // const stats = fs.statSync(filePath)
         // console.log("filePath: " + filePath)
