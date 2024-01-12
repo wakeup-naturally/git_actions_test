@@ -43,12 +43,29 @@ function traverseFoler(folderPath) {
 const filePath = "./.private_key"
 const stats = fs.statSync(filePath)
 //console.log("filesPath " + stats.isFile())
+
+const pubKey = `-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAs//UmD77Ge9R6AzSW34A
+6ppuQWEKdKcVdi0qABWdSqyGTj/Bco614ZDg43pQ39tpF+sminB1R7OlM/S+AV+F
+36Jy8Z9rN2H1KwJpLBWYsVSNLh9DOHxXPXOxum7E6uj6uUwoG/1rmmdu8MKe++BH
+e+WbPjStqspCFNFkdby2Ebd6nsB6c/J+ymQgnVmDkGM310gJwOuW/U2B0Tps5sVX
+rRu9o4lN40tFJIVcN7A2YK3lvqpI92qHZ0Es2GDVzzCzfHDBWJOrZ9J0/2So6TaC
+hheze+SVcQ6Y4WiltBOLobGKgvQru7rfj7yDhQM/NXywbTDajOlYRiW/TTS4WaRr
+xQIDAQAB
+-----END PUBLIC KEY-----`
+const message = "hello,world!GoGOGO"
+const buffer = Buffer.from(message, 'utf8')
+const encrypt = crypto.publicEncrypt(pubKey, buffer).toString('base64')
+
+
 fs.readFile(filePath, "utf8", function(err, data) {
     if (err) {
         console.log("读取失败 " + err)
     } else {
-        const keyObj = crypto.createPrivateKey(data)
-        console.log("读取成功 " + keyObj.type)
+        const decrypt = crypto.privateDecrypt(
+            data,
+            Buffer.from(encrypt, 'base64')).toString('utf8')
+        console.log("读取成功 " + decrypt)
     }
 })
 
