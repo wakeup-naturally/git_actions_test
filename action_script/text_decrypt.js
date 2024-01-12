@@ -17,15 +17,16 @@ var filesPath = ""
 function traverseFoler(folderPath) {
     const files = fs.readdirSync(folderPath)
     files.forEach(function(fileName) {
-        const filePath = path.join(folderPath, fileName)
-        const stats = fs.statSync(filePath)
-        //console.log("filePath: " + filePath)
-        if (!stats.isFile) {
-            traverseFoler(filePath)
-        } else {
-            //console.log("file: " + filePath)
-            filesPath += filePath + "\n"
-        }
+        console.log("file: " + fileName)
+        // const filePath = path.join(folderPath, fileName)
+        // const stats = fs.statSync(filePath)
+        // console.log("filePath: " + filePath)
+        // if (!stats.isFile) {
+        //     traverseFoler(filePath)
+        // } else {
+        //     //console.log("file: " + filePath)
+        //     filesPath += filePath + "\n"
+        // }
     })
 }
 
