@@ -40,9 +40,11 @@ function aesDecryptSync1() {
                 if (lineNumber == 0) {
                     lineNumber++
                     var aesDecryptedBase64 = decryptedContent = crypto.privateDecrypt(
-                        privatKey,
+                        {
+                            key: privatKey
+                        },
                         Buffer.from(encryptedContent, 'base64')).toString('utf8')
-                   // console.log("aesDecryptSync aesDecryptedBase64| " + aesDecryptedBase64)
+                    console.log("aesDecryptSync aesDecryptedBase64| " + aesDecryptedBase64)
                     let aesKeyIvBase64 = aesDecryptedBase64.split(':')
                     let aesKeyBase64 = aesKeyIvBase64[0]
                     let aesIvBase64 = aesKeyIvBase64[1]
@@ -54,8 +56,7 @@ function aesDecryptSync1() {
                     decipher = crypto.createDecipheriv(getAlgorithm(aesKeyBase64), key, iv);
                 } else {
                     lineNumber++
-                    let encryptedDataBase64 =line
-                    decryptedText += decipher.update(encryptedDataBase64, 'base64', 'utf8');
+                    decryptedText += decipher.update(encryptedContent, 'base64', 'utf8');
                     decryptedText += decipher.final('utf8') + "\n";
                 }
             }
@@ -67,4 +68,5 @@ function aesDecryptSync1() {
 }
 
 let test_decrypt_base64 = aesDecryptSync1()
-console.log(test_decrypt_base64);
+// console.log(test_decrypt_base64);
+console.log(test_decrypt_base64.replaceAll('<', '\<'));
