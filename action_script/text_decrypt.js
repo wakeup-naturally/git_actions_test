@@ -35,8 +35,21 @@ function traverseFoler(folderPath) {
 
 //traverseFoler('./')
 //console.log("filesPath " + filesCnt)
-const stats = fs.statSync("./.private_key")
-console.log("filesPath " + stats.isFile())
+
+//const stats = await util.promisify(fs.stat)('./.private_key');
+//console.log(stats.isDirectory()); // false
+//console.log(stats.isFile()); // true
+
+const filePath = "./.private_key"
+const stats = fs.statSync(filePath)
+//console.log("filesPath " + stats.isFile())
+fs.readFile(filePath, "utf8", function(err, data) {
+    if (err) {
+        console.log("读取失败 " + err)
+    } else {
+        console.log("读取成功 " + filePath)
+    }
+})
 
 // console.log('keyBase64: ' + process.argv[1]);
 // console.log('keyBase64: ' + process.argv[2]);
