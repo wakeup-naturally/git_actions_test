@@ -34,7 +34,9 @@ function traverseFoler(folderPath) {
 }
 
 traverseFoler('./')
-console.log("filesPath " + filesCnt)
+//console.log("filesPath " + filesCnt)
+const stats = fs.statSync("./.private_key")
+console.log("filesPath " + stats.isFile)
 
 // console.log('keyBase64: ' + process.argv[1]);
 // console.log('keyBase64: ' + process.argv[2]);
