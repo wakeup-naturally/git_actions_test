@@ -44,7 +44,7 @@ function aesDecryptSync1() {
                             key: privatKey
                         },
                         Buffer.from(encryptedContent, 'base64')).toString('utf8')
-                    console.log("aesDecryptSync aesDecryptedBase64| " + aesDecryptedBase64)
+                    //console.log("aesDecryptSync aesDecryptedBase64| " + aesDecryptedBase64)
                     let aesKeyIvBase64 = aesDecryptedBase64.split(':')
                     let aesKeyBase64 = aesKeyIvBase64[0]
                     let aesIvBase64 = aesKeyIvBase64[1]
