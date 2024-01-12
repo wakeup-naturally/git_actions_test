@@ -8,7 +8,7 @@ fs.readFile("./.private_key.pem", "utf8", function(err, data) {
     if (err) {
         console.log("读取失败 " + err)
     } else {
-        console.log(data)
+        console.log("读取成功 ")
     }
 })
 
