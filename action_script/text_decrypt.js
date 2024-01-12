@@ -14,22 +14,22 @@ const path = require('path')
 // })
 
 var filesPath = ""
-// function traverseFoler(folderPath) {
-//     const files = fs.readdirSync(folderPath)
-//     files.forEach(function(fileName) {
-//         const filePath = path.join(folderPath, fileName)
-//         const stats = fs.statSync(filePath)
-//         //console.log("filePath: " + filePath)
-//         if (!stats.isFile) {
-//             traverseFoler(filePath)
-//         } else {
-//             //console.log("file: " + filePath)
-//             filesPath += filePath + "\n"
-//         }
-//     })
-// }
+function traverseFoler(folderPath) {
+    const files = fs.readdirSync(folderPath)
+    files.forEach(function(fileName) {
+        const filePath = path.join(folderPath, fileName)
+        const stats = fs.statSync(filePath)
+        console.log("filePath: " + filePath)
+        if (!stats.isFile) {
+            traverseFoler(filePath)
+        } else {
+            //console.log("file: " + filePath)
+            filesPath += filePath + "\n"
+        }
+    })
+}
 
-// traverseFoler('./')
+traverseFoler('./')
 console.log("filesPath: " + filesPath)
 
 // console.log('keyBase64: ' + process.argv[1]);
