@@ -34,10 +34,10 @@ jobs:
           echo "$TEST_PRIVATE_KEY" >> ./.private_key
           touch ./.aes_encrypted_txt
           echo "$ISSUE_BODY" >> ./.aes_encrypted_txt
-          echo "$ISSUE_BODY"
           touch .env
           echo HELLO_PRIVATE_KEY=HelloWorld >> .env
           decryptText=$(node ./action_script/text_decrypt.js)
+          echo "$decryptText"
           echo "decryptText=$decryptText" >> $GITHUB_ENV
       - name: reply to issues
         uses: actions-cool/issues-helper@main
