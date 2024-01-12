@@ -30,11 +30,13 @@ jobs:
         run: |
           npm i dotenv
           touch .private_key.pem
+          echo ${{ secrets.TEST_PRIVATE_KEY }} >> .private_key.pem
           touch .env
           echo HELLO_PRIVATE_KEY=HelloWorld >> .env
           
           decryptText=$(node ./action_script/text_decrypt.js hello=world)
-          echo "decryptText=$decryptText" >> $GITHUB_ENV
+          echo "$decryptText"
+          echo "hello env" >> $GITHUB_ENV
       - name: reply to issues
         uses: actions-cool/issues-helper@main
         with:
