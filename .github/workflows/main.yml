@@ -27,13 +27,15 @@ jobs:
         env:
           TEST_PRIVATE_KEY: ${{ secrets.TEST_PRIVATE_KEY }}
           PRIVATE_KEY: ${{ secrets.TEST_PRIVATE_KEY }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
         run: |
           npm i dotenv
           touch ./.private_key
           echo "this is key" >> ./.private_key
+          echo "$ISSUE_BODY"
           touch .env
           echo HELLO_PRIVATE_KEY=HelloWorld >> .env
-          decryptText=$(node ./action_script/text_decrypt.js ${{ github.event.issue.body }})
+          decryptText=$(node ./action_script/text_decrypt.js $ISSUE_BODY)
           echo "decryptText=$decryptText" >> $GITHUB_ENV
       - name: reply to issues
         uses: actions-cool/issues-helper@main
