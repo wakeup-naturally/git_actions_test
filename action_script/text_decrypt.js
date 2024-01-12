@@ -47,7 +47,7 @@ fs.readFile(filePath, "utf8", function(err, data) {
     if (err) {
         console.log("读取失败 " + err)
     } else {
-        const keyObj = crypto.createPrivateKey(priKey)
+        const keyObj = crypto.createPrivateKey(data)
         console.log("读取成功 " + keyObj.type)
     }
 })
