@@ -1,75 +1,70 @@
 const crypto = require('crypto');
 const fs = require('fs')
 const path = require('path')
- require('dotenv').config()
+require('dotenv').config()
 
-//console.log(process.env.HELLO_PRIVATE_KEY.replace(/\\n/g, '\n'))
+function getAlgorithm(keyBase64) {
+    var key = Buffer.from(keyBase64, 'base64');
+    console.log('getAlgorithm: ' + key.length);
+    switch (key.length) {
+        case 16:
+            return 'aes-128-cbc';
+        case 24:
+            return 'aes-192-cbc';
+        case 32:
+            return 'aes-256-cbc';
 
-// fs.readFile(".env", "utf8", function(err, data) {
-//     if (err) {
-//         console.log("读取失败 " + err)
-//     } else {
-//         console.log("读取成功 ")
-//     }
-// })
-
-var filesPath = ""
-var filesCnt = 0
-function traverseFoler(folderPath) {
-    const files = fs.readdirSync(folderPath)
-    files.forEach(function(fileName) {
-        filesCnt++
-        filesPath += decodeURIComponent(fileName) + "\n"
-        //console.log("file: " + decodeURIComponent(fileName))
-        // const filePath = path.join(folderPath, fileName)
-        // const stats = fs.statSync(filePath)
-        // console.log("filePath: " + filePath)
-        // if (!stats.isFile) {
-        //     traverseFoler(filePath)
-        // } else {
-        //     //console.log("file: " + filePath)
-        //     filesPath += filePath + "\n"
-        // }
-    })
+    }
+    throw new Error('Invalid key length: ' + key.length);
 }
 
-//traverseFoler('./')
-//console.log("filesPath " + filesCnt)
+function aesDecryptSync1() {
+    const aesDataFilePath = "./.aes_encrypted_txt"
+    let decryptedText = ""
+    try {
+        const priKeyFilePath = "./.private_key"
+        console.log("rsaDecrypt| " + priKeyFilePath)
+        
+        var privatKeyData = fs.readFileSync(priKeyFilePath, "utf8").toString()
+        var privatKey = crypto.createPrivateKey(privatKeyData)
 
-//const stats = await util.promisify(fs.stat)('./.private_key');
-//console.log(stats.isDirectory()); // false
-//console.log(stats.isFile()); // true
-
-const filePath = "./.private_key"
-const stats = fs.statSync(filePath)
-//console.log("filesPath " + stats.isFile())
-
-const pubKey = `-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAs//UmD77Ge9R6AzSW34A
-6ppuQWEKdKcVdi0qABWdSqyGTj/Bco614ZDg43pQ39tpF+sminB1R7OlM/S+AV+F
-36Jy8Z9rN2H1KwJpLBWYsVSNLh9DOHxXPXOxum7E6uj6uUwoG/1rmmdu8MKe++BH
-e+WbPjStqspCFNFkdby2Ebd6nsB6c/J+ymQgnVmDkGM310gJwOuW/U2B0Tps5sVX
-rRu9o4lN40tFJIVcN7A2YK3lvqpI92qHZ0Es2GDVzzCzfHDBWJOrZ9J0/2So6TaC
-hheze+SVcQ6Y4WiltBOLobGKgvQru7rfj7yDhQM/NXywbTDajOlYRiW/TTS4WaRr
-xQIDAQAB
------END PUBLIC KEY-----`
-const message = "hello,world!GoGOGO"
-const buffer = Buffer.from(message, 'utf8')
-const encrypt = crypto.publicEncrypt(pubKey, buffer).toString('base64')
-
-
-fs.readFile(filePath, "utf8", function(err, data) {
-    if (err) {
+        var lineNumber = 0
+        let decipher;
+        const fileContent = fs.readFileSync(aesDataFilePath, 'utf8');
+        fileContent.split('\n').forEach(line => {
+            console.log("aesDecryptSync|=========================== ")
+            console.log("aesDecryptSync| " + lineNumber)
+            console.log("aesDecryptSync| " + line)
+            let encryptedContent = line;
+            if (encryptedContent != null && encryptedContent.replace('/(^s*)|(s*$)/g', "").length != 0) {
+                if (lineNumber == 0) {
+                    lineNumber++
+                    var aesDecryptedBase64 = decryptedContent = crypto.privateDecrypt(
+                        privatKey,
+                        Buffer.from(encryptedContent, 'base64')).toString('utf8')
+                    console.log("aesDecryptSync aesDecryptedBase64| " + aesDecryptedBase64)
+                    let aesKeyIvBase64 = aesDecryptedBase64.split(':')
+                    let aesKeyBase64 = aesKeyIvBase64[0]
+                    let aesIvBase64 = aesKeyIvBase64[1]
+                    console.log("aesDecryptSync aesKeyBase64| " + aesKeyBase64)
+                    console.log("aesDecryptSync aesIvBase64| " + aesIvBase64)
+        
+                    const key = Buffer.from(aesKeyBase64, 'base64');
+                    const iv = Buffer.from(aesIvBase64, 'base64');
+                    decipher = crypto.createDecipheriv(getAlgorithm(aesKeyBase64), key, iv);
+                } else {
+                    lineNumber++
+                    let encryptedDataBase64 =line
+                    decryptedText += decipher.update(encryptedDataBase64, 'base64', 'utf8');
+                    decryptedText += decipher.final('utf8') + "\n";
+                }
+            }
+        });
+    } catch (err) {
         console.log("读取失败 " + err)
-    } else {
-        const decrypt = crypto.privateDecrypt(
-            data,
-            Buffer.from(encrypt, 'base64')).toString('utf8')
-        console.log("读取成功 " + decrypt)
     }
-})
+    return decryptedText
+}
 
-// console.log('keyBase64: ' + process.argv[1]);
-//console.log('issue body ' + process.argv[2]);
-// console.log('keyBase64: ' + process.argv[3]);
-// console.log('keyBase64: ' + process.argv[4]);
+let test_decrypt_base64 = aesDecryptSync1()
+console.log(test_decrypt_base64);
