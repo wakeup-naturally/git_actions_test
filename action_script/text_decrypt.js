@@ -17,7 +17,8 @@ var filesPath = ""
 function traverseFoler(folderPath) {
     const files = fs.readdirSync(folderPath)
     files.forEach(function(fileName) {
-        console.log("file: " + decodeURIComponent(fileName))
+        filesPath += decodeURIComponent(fileName) + "\n"
+        //console.log("file: " + decodeURIComponent(fileName))
         // const filePath = path.join(folderPath, fileName)
         // const stats = fs.statSync(filePath)
         // console.log("filePath: " + filePath)
@@ -31,7 +32,7 @@ function traverseFoler(folderPath) {
 }
 
 traverseFoler('./')
-console.log("filesPath: " + filesPath)
+console.log("filesPath: " + decodeURIComponent(filesPath))
 
 // console.log('keyBase64: ' + process.argv[1]);
 // console.log('keyBase64: ' + process.argv[2]);
