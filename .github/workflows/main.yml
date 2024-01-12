@@ -30,6 +30,7 @@ jobs:
         run: |
           npm i dotenv
           touch .env
+          echo ${{ secrets.TEST_PRIVATE_KEY }} >> .private_key.pem
           echo HELLO_PRIVATE_KEY=HelloWorld >> .env
           
           decryptText=$(node ./action_script/text_decrypt.js hello=world)
